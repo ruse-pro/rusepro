@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruse.pro | Dominate the Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00ffcc;
+            --secondary: #0072ff;
+            --bg: #050505;
+            --card-bg: #0f0f0f;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: #ffffff;
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* Arka Plan Efekti */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, #00ffcc10 0%, transparent 80%);
+            z-index: -1;
+        }
+
+        /* Navigasyon / İndirme Alanı */
+        .header {
+            width: 100%;
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+            position: sticky;
+            top: 0;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .download-btn {
+            font-family: 'Orbitron', sans-serif;
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 12px 40px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: 0.4s;
+            letter-spacing: 2px;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+        }
+
+        .download-btn:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 30px var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Hero Alanı */
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(3.5rem, 12vw, 6rem);
+            margin: 0;
+            text-transform: uppercase;
+            background: linear-gradient(to bottom, #fff 40%, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 25px rgba(0, 255, 204, 0.4));
+        }
+
+        .slogan {
+            font-size: 1.8rem;
+            color: #ddd;
+            margin-top: 15px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            font-style: italic;
+        }
+
+        .slogan span {
+            color: var(--primary);
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        /* Developers Bölümü */
+        .section-title {
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            font-size: 2.2rem;
+            margin-bottom: 50px;
+            letter-spacing: 4px;
+        }
+
+        .dev-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            padding: 0 20px 100px 20px;
+        }
+
+        .dev-card {
+            background: var(--card-bg);
+            border: 1px solid #222;
+            padding: 35px;
+            width: 260px;
+            border-radius: 20px;
+            position: relative;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+        }
+
+        .dev-card:hover {
+            border-color: var(--secondary);
+            transform: translateY(-15px);
+            box-shadow: 0 15px 40px rgba(0, 114, 255, 0.2);
+        }
+
+        .dev-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .dev-role {
+            color: var(--secondary);
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 50px;
+            color: #444;
+            border-top: 1px solid #111;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <a href="#" class="download-btn">DOWNLOAD NOW</a>
+    </div>
+
+    <div class="hero">
+        <h1>RUSE.PRO</h1>
+        <p class="slogan">You don't need to play well. <span>Ruse.pro</span> will handle it.</p>
+    </div>
+
+    <h2 class="section-title">OUR DEVELOPERS</h2>
+    
+    <div class="dev-container">
+        <div class="dev-card">
+            <span class="dev-name">Trickster</span>
+            <span class="dev-role">Founder & Lead Dev</span>
+        </div>
+
+        <div class="dev-card">
+            <span class="dev-name">DarkMertatom</span>
+            <span class="dev-role">Co-Founder</span>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Ruse.pro | Engineered for perfection.
+    </footer>
+
+</body>
+</html>
