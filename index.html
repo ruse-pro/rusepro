@@ -6,48 +6,55 @@
     <title>Ruse.pro | Official</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #ffffff; --bg: #000000; --card: #080808; }
-        body { background-color: var(--bg); color: #fff; font-family: 'Rajdhani', sans-serif; margin: 0; text-align: center; }
+        :root { --primary: #ffffff; --bg: #000000; --card: #0a0a0a; --accent: #ffffff; }
+        body { background-color: var(--bg); color: #fff; font-family: 'Rajdhani', sans-serif; margin: 0; text-align: center; scroll-behavior: smooth; }
         
         /* Navbar */
-        .navbar { padding: 20px; display: flex; justify-content: space-around; align-items: center; border-bottom: 1px solid #111; position: sticky; top: 0; background: rgba(0,0,0,0.9); z-index: 1000; }
-        .nav-links a { color: #666; text-decoration: none; margin: 0 15px; font-family: 'Orbitron'; font-size: 0.8rem; transition: 0.3s; }
-        .nav-links a:hover { color: #fff; }
-        .user-area button { background: #fff; color: #000; border: none; padding: 8px 15px; border-radius: 4px; font-family: 'Orbitron'; cursor: pointer; font-size: 0.7rem; }
-
-        /* Login Modal */
-        .modal { display: none; position: fixed; z-index: 2000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); align-items: center; justify-content: center; }
-        .modal-content { background: var(--card); padding: 40px; border: 1px solid #222; border-radius: 10px; width: 300px; }
-        .modal-content input { width: 100%; padding: 10px; margin: 10px 0; background: #000; border: 1px solid #333; color: #fff; box-sizing: border-box; }
-        .modal-content button { width: 100%; padding: 10px; background: #fff; color: #000; border: none; font-family: 'Orbitron'; cursor: pointer; margin-top: 10px; }
+        .navbar { padding: 20px; display: flex; justify-content: space-around; align-items: center; border-bottom: 1px solid #111; position: sticky; top: 0; background: rgba(0,0,0,0.9); z-index: 1000; backdrop-filter: blur(10px); }
+        .nav-links a { color: #888; text-decoration: none; margin: 0 15px; font-family: 'Orbitron'; font-size: 0.8rem; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; }
+        .nav-links a:hover { color: #fff; text-shadow: 0 0 10px #fff; }
+        .user-area button { background: #fff; color: #000; border: none; padding: 8px 18px; border-radius: 2px; font-family: 'Orbitron'; cursor: pointer; font-size: 0.7rem; font-weight: bold; }
 
         /* Hero */
-        .hero { padding: 80px 20px; }
-        .logo-text { font-family: 'Orbitron'; font-size: 5rem; margin: 0; letter-spacing: 10px; }
-        .slogan { color: #444; letter-spacing: 3px; margin-bottom: 40px; }
+        .hero { padding: 120px 20px; }
+        .logo-text { font-family: 'Orbitron'; font-size: clamp(3.5rem, 12vw, 6.5rem); margin: 0; letter-spacing: 15px; font-weight: 700; text-shadow: 0 0 20px rgba(255,255,255,0.2); }
+        .slogan { color: #555; letter-spacing: 4px; margin: 25px 0 60px 0; font-size: 1.1rem; text-transform: uppercase; font-weight: 500; }
 
         /* Downloads */
-        .download-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; padding-bottom: 100px; }
-        .dl-card { background: var(--card); border: 1px solid #111; padding: 30px; width: 280px; border-radius: 8px; transition: 0.3s; }
-        .dl-card:hover { border-color: #444; transform: translateY(-5px); }
-        .btn { display: block; padding: 15px; text-decoration: none; font-family: 'Orbitron'; margin-top: 20px; border-radius: 4px; }
-        .btn-free { background: #fff; color: #000; }
+        .download-container { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; padding: 50px 20px; }
+        .dl-card { background: var(--card); border: 1px solid #1a1a1a; padding: 45px 35px; width: 320px; border-radius: 4px; transition: 0.4s; position: relative; overflow: hidden; }
+        .dl-card:hover { border-color: #fff; transform: translateY(-10px); box-shadow: 0 10px 30px rgba(255,255,255,0.05); }
+        .btn { display: block; padding: 18px; text-decoration: none; font-family: 'Orbitron'; margin-top: 25px; border-radius: 2px; font-weight: bold; letter-spacing: 2px; font-size: 0.9rem; }
+        .btn-free { background: #fff; color: #000; border: 1px solid #fff; }
         .btn-pro { border: 1px solid #333; color: #fff; }
+        .btn-pro:hover { background: #fff; color: #000; }
 
-        /* Ekip */
-        .team-grid { display: flex; justify-content: center; gap: 15px; padding: 50px; background: #030303; }
-        .team-card { border: 1px solid #111; padding: 20px; width: 180px; }
-        .team-card span { display: block; color: #444; font-size: 0.7rem; }
-        .team-card b { color: #fff; font-size: 1.1rem; }
+        /* Ekip & İletişim (Yeni ve Büyük Tasarım) */
+        .team-section { padding: 100px 20px; background: #050505; border-top: 1px solid #111; }
+        .team-grid { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; margin-top: 50px; }
+        .team-card { background: #000; border: 1px solid #222; padding: 40px 30px; width: 280px; border-radius: 10px; transition: 0.3s; }
+        .team-card:hover { border-color: #fff; background: #080808; }
+        .team-card .role { display: block; color: #fff; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 15px; font-family: 'Orbitron'; opacity: 0.6; }
+        .team-card .name { color: #fff; font-size: 1.8rem; font-family: 'Orbitron'; display: block; margin-bottom: 20px; }
+        .team-card .discord-box { background: #111; padding: 10px; border-radius: 5px; font-size: 0.9rem; color: #888; border: 1px solid #1a1a1a; }
+        .team-card .discord-box b { color: #fff; font-family: monospace; }
+
+        /* Modals */
+        .modal { display: none; position: fixed; z-index: 2000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); align-items: center; justify-content: center; }
+        .modal-content { background: var(--card); padding: 50px; border: 1px solid #222; border-radius: 4px; width: 350px; text-align: center; }
+        .modal-content input { width: 100%; padding: 15px; margin: 10px 0; background: #000; border: 1px solid #222; color: #fff; font-family: 'Rajdhani'; font-size: 1.1rem; }
+        .modal-content button { width: 100%; padding: 15px; background: #fff; color: #000; border: none; font-family: 'Orbitron'; cursor: pointer; font-weight: bold; margin-top: 15px; }
+
+        footer { padding: 50px; color: #222; font-size: 0.8rem; letter-spacing: 2px; }
     </style>
 </head>
 <body>
 
     <div class="navbar">
         <div class="nav-links">
-            <a href="https://www.youtube.com/@ruse-pro">YOUTUBE</a>
+            <a href="https://www.youtube.com/@ruse-pro" target="_blank">YOUTUBE</a>
             <a href="#downloads">HİLELER</a>
-            <a href="#ekip">EKİP</a>
+            <a href="#ekip">EKİP & İLETİŞİM</a>
         </div>
         <div class="user-area" id="userArea">
             <button onclick="openModal('loginModal')">GİRİŞ YAP</button>
@@ -56,46 +63,65 @@
 
     <div class="hero">
         <h1 class="logo-text">RUSE.PRO</h1>
-        <p class="slogan">GELECEĞİN HİLE TEKNOLOJİSİ</p>
+        <p class="slogan">YOU DON'T NEED TO PLAY WELL. RUSE.PRO WILL HANDLE IT.</p>
     </div>
 
     <div id="downloads" class="download-container">
         <div class="dl-card">
-            <h3 style="font-family:'Orbitron'">RUSE FREE</h3>
-            <p>Ücretsiz versiyon.</p>
-            <a href="./RuseFree.jar" download class="btn btn-free">İNDİR</a>
+            <h3 style="font-family:'Orbitron'; letter-spacing: 2px;">RUSE FREE</h3>
+            <p style="color:#555; margin: 20px 0;">Sınırlı özellikler, güçlü bypass.</p>
+            <a href="./RuseFree.jar" download class="btn btn-free">ÜCRETSİZ İNDİR</a>
         </div>
-        <div class="dl-card">
-            <h3 style="font-family:'Orbitron'">RUSE PRO</h3>
-            <p>30 TL / Haftalık</p>
-            <a href="javascript:void(0)" onclick="alert('PRO üyelik için Discord: Xmurat77')" class="btn btn-pro">SATIN AL</a>
+        <div class="dl-card" style="border-color: #222;">
+            <h3 style="font-family:'Orbitron'; letter-spacing: 2px; color: #fff;">RUSE PRO</h3>
+            <p style="color:#555; margin: 20px 0;">Tüm özellikler & anında güncelleme.</p>
+            <a href="javascript:void(0)" onclick="alert('PRO satın almak için Discord üzerinden Trickster (ruse.pro) ile iletişime geçin.')" class="btn btn-pro">SATIN AL (30 TL)</a>
         </div>
     </div>
 
-    <div id="ekip" class="team-grid">
-        <div class="team-card"><span>KURUCU</span><b>Xmurat77</b></div>
-        <div class="team-card"><span>KURUCU ORTAK</span><b>DarkMert1233</b></div>
-        <div class="team-card"><span>TASARIMCI</span><b>DarkXweeyz</b></div>
+    <div id="ekip" class="team-section">
+        <h2 style="font-family:'Orbitron'; letter-spacing: 8px; font-size: 2rem;">EKİBİMİZ & İLETİŞİM</h2>
+        <div class="team-grid">
+            <div class="team-card">
+                <span class="role">Kurucu</span>
+                <span class="name">Trickster</span>
+                <div class="discord-box">DC: <b>ruse.pro</b></div>
+            </div>
+            <div class="team-card">
+                <span class="role">Kurucu Ortak</span>
+                <span class="name">DarkMert</span>
+                <div class="discord-box">DC: <b>darkmert1233</b></div>
+            </div>
+            <div class="team-card">
+                <span class="role">Yardımcı Tasarımcı</span>
+                <span class="name">Xweeyz</span>
+                <div class="discord-box">DC: <b>Henüz Yok</b></div>
+            </div>
+        </div>
     </div>
+
+    <footer>
+        &copy; 2026 RUSE.PRO | ALL RIGHTS RESERVED.
+    </footer>
 
     <div id="loginModal" class="modal">
         <div class="modal-content">
-            <h2 style="font-family:'Orbitron'">GİRİŞ</h2>
+            <h2 style="font-family:'Orbitron'; margin-bottom: 30px;">GİRİŞ YAP</h2>
             <input type="text" id="loginUser" placeholder="Kullanıcı Adı">
             <input type="password" id="loginPass" placeholder="Şifre">
-            <button onclick="login()">GİRİŞ YAP</button>
-            <p style="font-size: 0.7rem; color: #444; margin-top: 15px; cursor: pointer;" onclick="closeModal('loginModal'); openModal('regModal')">Hesabın yok mu? Kayıt ol</p>
-            <button onclick="closeModal('loginModal')" style="background:transparent; color:#444; border:none">Kapat</button>
+            <button onclick="login()">GİRİŞ</button>
+            <p style="font-size: 0.8rem; color: #444; margin-top: 20px; cursor: pointer;" onclick="closeModal('loginModal'); openModal('regModal')">Hesabın yok mu? Kayıt Ol</p>
+            <button onclick="closeModal('loginModal')" style="background:transparent; color:#444; border:none; margin-top:10px; font-size: 0.7rem;">[ KAPAT ]</button>
         </div>
     </div>
 
     <div id="regModal" class="modal">
         <div class="modal-content">
-            <h2 style="font-family:'Orbitron'">KAYIT OL</h2>
+            <h2 style="font-family:'Orbitron'; margin-bottom: 30px;">KAYIT OL</h2>
             <input type="text" id="regUser" placeholder="Kullanıcı Adı">
             <input type="password" id="regPass" placeholder="Şifre">
             <button onclick="register()">KAYIT OL</button>
-            <button onclick="closeModal('regModal')" style="background:transparent; color:#444; border:none">Kapat</button>
+            <button onclick="closeModal('regModal')" style="background:transparent; color:#444; border:none; margin-top:10px; font-size: 0.7rem;">[ KAPAT ]</button>
         </div>
     </div>
 
@@ -109,7 +135,7 @@
             if(user && pass) {
                 localStorage.setItem('ruseUser', user);
                 localStorage.setItem('rusePass', pass);
-                alert('Kayıt Başarılı! Giriş yapabilirsiniz.');
+                alert('Kayıt Başarılı! Şimdi giriş yapabilirsin.');
                 closeModal('regModal');
                 openModal('loginModal');
             }
@@ -119,10 +145,10 @@
             const user = document.getElementById('loginUser').value;
             const pass = document.getElementById('loginPass').value;
             if(user === localStorage.getItem('ruseUser') && pass === localStorage.getItem('rusePass')) {
-                document.getElementById('userArea').innerHTML = `<span style="font-family:'Orbitron'; font-size:0.8rem">HOŞ GELDİN, ${user.toUpperCase()}</span>`;
+                document.getElementById('userArea').innerHTML = `<span style="font-family:'Orbitron'; font-size:0.8rem; color:#fff; letter-spacing:1px;">SELAM, ${user.toUpperCase()}</span>`;
                 closeModal('loginModal');
             } else {
-                alert('Hatalı kullanıcı adı veya şifre!');
+                alert('Kullanıcı adı veya şifre hatalı!');
             }
         }
     </script>
