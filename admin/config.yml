@@ -1,0 +1,19 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: "settings"
+    label: "Site Ayarları"
+    files:
+      - label: "Ana Sayfa İçerikleri"
+        name: "index"
+        file: "data/index.json"
+        fields:
+          - {label: "İndirme Linki", name: "download_link", widget: "string", default: "./RusePro.jar"}
+          - {label: "Slogan", name: "slogan", widget: "string"}
+          - {label: "YouTube Video ID", name: "video_id", widget: "string"}
+          
