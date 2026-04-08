@@ -1,86 +1,139 @@
-<script>
-    // Bakiyeyi ve kullanılmış kodları hafızadan çek
-    let balance = parseInt(localStorage.getItem('userBalance')) || 0;
-    let usedCodes = JSON.parse(localStorage.getItem('usedCodes')) || [];
-
-    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-
-    // Kullanıcı giriş yapmışsa arayüzü güncelle
-    function updateUI(username) {
-        document.getElementById('userPanel').innerHTML = `
-            <div class="balance-tag">${balance} TL</div>
-            <span style="font-family:'Orbitron'; font-size:0.7rem; color:#fff;">${username.toUpperCase()}</span>
-        `;
-        document.getElementById('wallet').style.display = 'block';
-    }
-
-    // BAKİYE YÜKLEME SİSTEMİ (STRICT SINGLE-USE)
-    function addBalance() {
-        const codeInput = document.getElementById('redeemCode');
-        const code = codeInput.value.trim().toUpperCase();
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruse.pro | Official</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #ffffff; --bg: #000000; --card: #0a0a0a; --accent: #00ff88; }
+        body { background: var(--bg); color: #fff; font-family: 'Rajdhani', sans-serif; margin: 0; overflow-x: hidden; }
         
-        // 1. KOD DAHA ÖNCE KULLANILMIŞ MI?
-        if (usedCodes.includes(code)) {
-            alert('HATA: Bu kod zaten kullanılmış! Tekrar kullanamazsın.');
-            return;
-        }
+        /* Navbar */
+        .navbar { padding: 20px 10%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #111; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; }
+        .nav-links a { color: #666; text-decoration: none; margin-left: 25px; font-family: 'Orbitron'; font-size: 0.8rem; transition: 0.3s; }
+        .nav-links a:hover { color: #fff; text-shadow: 0 0 10px #fff; }
 
-        // 2. ÖZEL ONAY SİSTEMİ (30TLÖDE Kodu İçin)
-        if (code === "30TLÖDE") {
-            const onay = confirm("Bu işlem için yönetici onayı gerekiyor (Email gönderilecek). Onaylıyor musun?");
-            if (onay) {
-                alert("İstek Trickster'a (Xmurat77) email olarak gönderildi. Onay gelince bakiyen tanımlanacak.");
-                // Burada gerçek bir email API'si (EmailJS gibi) bağlanabilir.
-                return; 
+        /* Hero & Slogan */
+        .hero { padding: 100px 20px; text-align: center; background: radial-gradient(circle at center, #111 0%, #000 70%); }
+        .logo { font-family: 'Orbitron'; font-size: clamp(3rem, 10vw, 6rem); letter-spacing: 15px; margin: 0; font-weight: 700; }
+        .slogan { color: #444; letter-spacing: 3px; font-size: 1.1rem; margin-top: 20px; text-transform: uppercase; }
+
+        /* Wallet & Market */
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        .wallet-box { background: var(--card); border: 1px solid #1a1a1a; padding: 30px; border-radius: 8px; margin-bottom: 50px; }
+        .wallet-box input { background: #000; border: 1px solid #222; padding: 12px; color: #fff; width: 50%; font-family: 'Orbitron'; outline: none; }
+        .wallet-box button { background: #fff; color: #000; border: none; padding: 12px 25px; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .wallet-box button:hover { background: var(--accent); }
+
+        .market-grid { display: flex; gap: 25px; justify-content: center; flex-wrap: wrap; }
+        .market-card { background: var(--card); border: 1px solid #111; padding: 40px 30px; width: 280px; border-radius: 10px; transition: 0.4s; }
+        .market-card:hover { border-color: #fff; transform: translateY(-10px); }
+        .price { font-size: 2rem; color: var(--accent); font-family: 'Orbitron'; margin: 20px 0; display: block; }
+        .buy-btn { display: block; width: 100%; padding: 15px; background: #fff; color: #000; text-decoration: none; font-family: 'Orbitron'; font-weight: bold; border-radius: 4px; cursor: pointer; border: none; }
+
+        /* Ekip */
+        .team-section { background: #050505; padding: 80px 20px; border-top: 1px solid #111; }
+        .team-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 40px; }
+        .team-card { border: 1px solid #222; padding: 30px; width: 220px; transition: 0.3s; border-radius: 5px; }
+        .team-card:hover { border-color: var(--accent); background: #000; }
+        .team-card span { display: block; color: #444; font-size: 0.7rem; text-transform: uppercase; margin-bottom: 10px; }
+        .team-card b { display: block; font-family: 'Orbitron'; font-size: 1.4rem; color: #fff; margin-bottom: 10px; }
+        .team-card small { color: #888; font-family: monospace; }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div style="font-family:'Orbitron'; font-weight:bold; letter-spacing:2px;">RUSE<span style="color:var(--accent);">.PRO</span></div>
+        <div class="nav-links">
+            <a href="#market">MARKET</a>
+            <a href="#ekip">EKİP</a>
+            <a href="https://www.youtube.com/@ruse-pro" target="_blank">YOUTUBE</a>
+        </div>
+    </div>
+
+    <div class="hero">
+        <h1 class="logo">RUSE.PRO</h1>
+        <p class="slogan">YOU DON'T NEED TO PLAY WELL. RUSE.PRO WILL HANDLE IT.</p>
+    </div>
+
+    <div class="container">
+        <div class="wallet-box" id="market">
+            <h3 style="font-family:'Orbitron'; margin-top:0;">BAKİYE YÜKLE</h3>
+            <div style="display:flex; justify-content:center; align-items:center; gap:10px; margin-top:20px;">
+                <input type="text" id="redeemCode" placeholder="KODU BURAYA YAZ">
+                <button onclick="redeem()">YÜKLE</button>
+            </div>
+            <p style="font-size:0.8rem; margin-top:15px;">BAKİYE: <span id="balDisplay" style="color:var(--accent); font-weight:bold;">0</span> TL</p>
+        </div>
+
+        <div class="market-grid">
+            <div class="market-card">
+                <span style="font-family:'Orbitron'; opacity:0.5;">FREE EDITION</span>
+                <span class="price">0 TL</span>
+                <p style="color:#666;">Standart bypass ve temel özellikler.</p>
+                <a href="./RuseFree.jar" class="buy-btn" style="text-align:center;">İNDİR</a>
+            </div>
+            <div class="market-card" style="border-color: #222;">
+                <span style="font-family:'Orbitron'; opacity:0.5;">PRO EDITION</span>
+                <span class="price">30 TL</span>
+                <p style="color:#666;">Haftalık full erişim ve anında update.</p>
+                <button class="buy-btn" onclick="buyPro()">SATIN AL</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="ekip" class="team-section">
+        <h2 style="font-family:'Orbitron'; text-align:center; letter-spacing:5px;">YÖNETİM EKİBİ</h2>
+        <div class="team-grid">
+            <div class="team-card"><span>KURUCU</span><b>Trickster</b><small>DC: ruse.pro</small></div>
+            <div class="team-card"><span>ORTAK</span><b>DarkMert</b><small>DC: darkmert1233</small></div>
+            <div class="team-card"><span>TASARIM</span><b>Xweeyz</b><small>DC: -</small></div>
+        </div>
+    </div>
+
+    <footer style="padding:40px; text-align:center; color:#222; font-size:0.8rem;">
+        &copy; 2026 RUSE.PRO | ALL RIGHTS RESERVED.
+    </footer>
+
+    <script>
+        let balance = parseInt(localStorage.getItem('userBal')) || 0;
+        let used = JSON.parse(localStorage.getItem('usedCodes')) || [];
+        document.getElementById('balDisplay').innerText = balance;
+
+        function redeem() {
+            const input = document.getElementById('redeemCode');
+            const code = input.value.trim().toUpperCase();
+            if(used.includes(code)) return alert('Bu kod zaten kullanılmış!');
+
+            const codes = {
+                "İLKHİLEM":1, "ABONE":1, "RUSEPRO":5, "TRİCKSTER":10, 
+                "DARKMERTATOM":10, "YOUTUBE":2, "DİSCORD":2, "30TLÖDE":30
+            };
+
+            if(codes[code]) {
+                balance += codes[code];
+                used.push(code);
+                localStorage.setItem('userBal', balance);
+                localStorage.setItem('usedCodes', JSON.stringify(used));
+                alert(codes[code] + ' TL başarıyla yüklendi!');
+                location.reload();
             } else {
-                return;
+                alert('Geçersiz kod!');
             }
         }
 
-        // 3. KOD LİSTESİ VE MİKTARLAR
-        const promoCodes = {
-            "İLKHİLEM": 1, "ABONE": 1, "RUSEPRO": 5, "RUSEFREE": 1,
-            "TRİCKSTER": 10, "DARKMERTATOM": 10, "YOUTUBE": 2, "DİSCORD": 2
-        };
-
-        if (promoCodes[code]) {
-            let amount = promoCodes[code];
-            
-            // Kodu 'kullanıldı' listesine ekle ve kaydet
-            usedCodes.push(code);
-            localStorage.setItem('usedCodes', JSON.stringify(usedCodes));
-            
-            // Bakiyeyi ekle ve kaydet
-            balance += amount;
-            localStorage.setItem('userBalance', balance);
-            
-            alert('BAŞARILI! ' + amount + ' TL yüklendi. Bu kod artık geçersizdir.');
-            location.reload(); 
-        } else {
-            alert('Geçersiz veya hatalı kod!');
+        function buyPro() {
+            if(balance >= 30) {
+                balance -= 30;
+                localStorage.setItem('userBal', balance);
+                alert('PRO başarıyla satın alındı! İndirme linki açılıyor...');
+                window.location.href = "./RusePro.jar";
+            } else {
+                alert('Yetersiz bakiye! Kod bozdurarak bakiye yükleyin.');
+            }
         }
-    }
-
-    function buyProduct(price) {
-        if(!localStorage.getItem('ruseUser')) {
-            alert('Önce giriş yapmalısın!');
-            openModal('loginModal');
-            return;
-        }
-        if(balance >= price) {
-            balance -= price;
-            localStorage.setItem('userBalance', balance);
-            alert('Ödeme alındı! Ürününüz aktif edildi.');
-            location.reload();
-        } else {
-            alert('Bakiye yetersiz! Lütfen kod bozdurarak bakiye yükleyin.');
-        }
-    }
-
-    // Sayfa açıldığında giriş kontrolü
-    window.onload = function() {
-        const savedUser = localStorage.getItem('ruseUser');
-        if(savedUser) updateUI(savedUser);
-    }
-</script>
+    </script>
+</body>
+</html>
