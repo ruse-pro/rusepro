@@ -9,26 +9,29 @@
         :root { --accent: #00ff88; --bg: #000; --card: #0a0a0a; }
         body { background: var(--bg); color: #fff; font-family: 'Rajdhani', sans-serif; margin: 0; overflow-x: hidden; scroll-behavior: smooth; }
         
-        /* Nav & Layout */
+        /* Navbar */
         .navbar { padding: 15px 10%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #111; background: rgba(0,0,0,0.9); position: sticky; top: 0; z-index: 1000; }
+        
+        /* Başarı Ekranı */
         .success-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 9999; align-items: center; justify-content: center; flex-direction: column; text-align: center; }
-        .success-overlay h1 { font-family: 'Orbitron'; font-size: 4rem; color: var(--accent); text-shadow: 0 0 20px var(--accent); }
+        .success-overlay h1 { font-family: 'Orbitron'; font-size: 4rem; color: var(--accent); text-shadow: 0 0 20px var(--accent); margin-bottom: 20px; }
         
+        /* Ana Konteynır */
         .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
-        .panel { background: var(--card); border: 1px solid #1a1a1a; padding: 40px; border-radius: 15px; text-align: center; margin-bottom: 30px; }
+        .panel { background: var(--card); border: 1px solid #1a1a1a; padding: 40px; border-radius: 15px; text-align: center; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
-        input { background: #000; border: 1px solid #222; padding: 15px; color: #fff; font-family: 'Orbitron'; outline: none; margin: 5px; width: 280px; text-align: center; }
-        button { background: #fff; color: #000; border: none; padding: 15px 30px; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        input { background: #000; border: 1px solid #222; padding: 15px; color: #fff; font-family: 'Orbitron'; outline: none; margin: 5px; width: 280px; text-align: center; border-radius: 5px; }
+        button { background: #fff; color: #000; border: none; padding: 15px 30px; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; transition: 0.3s; border-radius: 5px; }
         button:hover { background: var(--accent); transform: scale(1.05); }
 
         /* Ekip Kartları */
         .team-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; padding: 50px 0; }
         .team-card { background: #080808; border: 2px solid #111; padding: 50px; width: 320px; border-radius: 20px; text-align: center; transition: 0.4s; }
-        .team-card:hover { border-color: var(--accent); }
+        .team-card:hover { border-color: var(--accent); background: #000; }
         .team-card b { display: block; font-family: 'Orbitron'; font-size: 2.2rem; margin-bottom: 10px; }
-        .dc-btn { display: inline-block; margin-top: 15px; color: #5865F2; text-decoration: none; font-family: 'Orbitron'; font-size: 0.8rem; font-weight: bold; }
+        .dc-info { color: #5865F2; font-family: 'Orbitron'; font-weight: bold; font-size: 0.9rem; margin-top: 15px; display: block; }
 
-        /* Admin/Kod Sayfası Gizleme */
+        /* Gizli Alan */
         #adminSection { display: none; }
     </style>
 </head>
@@ -36,21 +39,22 @@
 
     <div id="successScreen" class="success-overlay">
         <h1>İŞLEM TAMAM!</h1>
-        <p id="successDetail" style="font-size: 1.5rem; margin-bottom: 30px;"></p>
-        <button onclick="closeSuccess()">DEVAM ET</button>
+        <p id="successDetail" style="font-size: 1.5rem; margin-bottom: 30px; color: #888;"></p>
+        <button onclick="closeSuccess()">SİSTEME DÖN</button>
     </div>
 
     <div id="mainPage">
         <div class="navbar">
-            <div style="font-family:'Orbitron'; font-weight:bold; letter-spacing:2px; font-size: 1.5rem;">RUSE.PRO</div>
-            <div id="balTag" style="font-family:'Orbitron'; color:var(--accent);">BAKİYE: 0 TL</div>
+            <div style="font-family:'Orbitron'; font-weight:bold; letter-spacing:2px; font-size: 1.5rem;">RUSE<span style="color:var(--accent);">.PRO</span></div>
+            <div id="balTag" style="font-family:'Orbitron'; color:var(--accent); font-weight: bold;">BAKİYE: 0 TL</div>
         </div>
 
         <div class="container">
             <div class="panel">
-                <h1 style="font-family:'Orbitron'; letter-spacing: 10px;">RUSE.PRO</h1>
-                <p style="color:#444; letter-spacing: 2px;">YOU DON'T NEED TO PLAY WELL. RUSE.PRO WILL HANDLE IT.</p>
-                <div style="margin-top: 40px;">
+                <h1 style="font-family:'Orbitron'; letter-spacing: 15px; font-size: 3.5rem; margin: 0;">RUSE.PRO</h1>
+                <p style="color:#444; letter-spacing: 4px; font-weight: bold; margin-bottom: 40px;">YOU DON'T NEED TO PLAY WELL.</p>
+                
+                <div style="padding: 20px; border-top: 1px solid #111;">
                     <input type="text" id="redeemInput" placeholder="BAKİYE KODUNU GİR">
                     <button onclick="redeem()">KODU BOZDUR</button>
                 </div>
@@ -60,12 +64,12 @@
                 <div class="team-card">
                     <span style="color:var(--accent); font-size: 0.7rem; letter-spacing: 3px;">KURUCU</span>
                     <b>Trickster</b>
-                    <div class="dc-btn">Discord: ruse.pro</div>
+                    <span class="dc-info">Discord: ruse.pro</span>
                 </div>
                 <div class="team-card">
-                    <span style="color:var(--accent); font-size: 0.7rem; letter-spacing: 3px;">ORTAK</span>
+                    <span style="color:var(--accent); font-size: 0.7rem; letter-spacing: 3px;">KURUCU ORTAK</span>
                     <b>DarkMertatom</b>
-                    <div class="dc-btn">Discord: darkmert1233</div>
+                    <span class="dc-info">Discord: darkmert1233</span>
                 </div>
             </div>
         </div>
@@ -73,21 +77,21 @@
 
     <div id="adminSection">
         <div class="navbar">
-            <div style="font-family:'Orbitron';">RUSE.PRO // ADMIN PANEL</div>
-            <button onclick="window.location.hash=''" style="padding:5px 10px; font-size:0.6rem;">ÇIKIŞ</button>
+            <div style="font-family:'Orbitron'; color: var(--accent);">RUSE.PRO // GİZLİ PANEL</div>
+            <button onclick="window.location.hash=''" style="padding:5px 10px; font-size:0.6rem;">ÇIKIŞ YAP</button>
         </div>
         <div class="container">
-            <div class="panel" style="border-color: var(--accent);">
-                <h2 style="font-family:'Orbitron';">GÜVENLİ KOD ÜRETİMİ</h2>
+            <div class="panel" style="border: 2px solid var(--accent);">
+                <h2 style="font-family:'Orbitron'; margin-bottom: 30px;">KOD ÜRETİCİ (SPOILER MODU)</h2>
                 <input type="number" id="genAmount" placeholder="TL MİKTARI">
-                <button onclick="generateAndSend()" style="background: var(--accent);">ÜRET VE DC'YE AT</button>
+                <button onclick="generateAndSend()" style="background: var(--accent);">ÜRET VE DC'YE GÖNDER</button>
             </div>
         </div>
     </div>
 
     <script>
         const WH = "https://discord.com/api/webhooks/1491501294920401017/FFsIOxHwhyE1cSzWXPiKJJIHESAkzxfDI7oizQG15SW-nN6V4jxpTMf8YO9GPZooW6Ct";
-        const ADMIN_PASS = "ruse123"; // GİZLİ ŞİFRE (Burayı istediğin gibi değiştir)
+        const ADMIN_PASS = "ruse.admin.1234"; // Yeni Şifre
 
         let balance = parseInt(localStorage.getItem('ruse_bal')) || 0;
         let used = JSON.parse(localStorage.getItem('ruse_used')) || [];
@@ -97,12 +101,12 @@
 
         function checkRoute() {
             if(window.location.hash === "#kod") {
-                let p = prompt("Yönetici Şifresi:");
+                let p = prompt("Yönetici Şifresi Girin:");
                 if(p === ADMIN_PASS) {
                     document.getElementById('mainPage').style.display = 'none';
                     document.getElementById('adminSection').style.display = 'block';
                 } else {
-                    alert("Yetkisiz Giriş!");
+                    alert("Hatalı Şifre!");
                     window.location.hash = "";
                 }
             } else {
@@ -116,7 +120,7 @@
 
         function redeem() {
             const code = document.getElementById('redeemInput').value.trim().toUpperCase();
-            if(used.includes(code)) return alert("Kod daha önce kullanılmış!");
+            if(used.includes(code)) return alert("Bu kod zaten kullanılmış!");
 
             let dynamicCodes = JSON.parse(localStorage.getItem('ruse_dynamic_codes')) || {};
             let amount = dynamicCodes[code];
@@ -126,10 +130,9 @@
                 used.push(code);
                 localStorage.setItem('ruse_bal', balance);
                 localStorage.setItem('ruse_used', JSON.stringify(used));
-                
-                document.getElementById('successDetail').innerText = `+${amount} TL Hesabınıza Tanımlandı!`;
+                document.getElementById('successDetail').innerText = `+${amount} TL Tanımlandı.`;
                 document.getElementById('successScreen').style.display = 'flex';
-            } else { alert("Geçersiz kod!"); }
+            } else { alert("Geçersiz Kod!"); }
         }
 
         function generateAndSend() {
@@ -147,12 +150,12 @@
                 body: JSON.stringify({
                     embeds: [{
                         title: "🛠 YENİ KOD ÜRETİLDİ",
-                        description: `**Kod:** \`${newCode}\`\n**Miktar:** ${amount} TL`,
+                        description: `**Kod:** ||${newCode}||\n**Değer:** ${amount} TL`,
                         color: 5763719,
                         timestamp: new Date()
                     }]
                 })
-            }).then(() => alert("Kod Üretildi ve DC'ye gönderildi!"));
+            }).then(() => alert("Kod Üretildi ve Spoiler olarak DC'ye gönderildi!"));
         }
     </script>
 </body>
