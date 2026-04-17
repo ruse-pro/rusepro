@@ -6,154 +6,164 @@
     <title>Ruse.pro | Hilenin Tek Adresi</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --accent: #00ff88; --bg: #0a0a0a; --panel: #111; --border: #222; }
+        :root { --accent: #00ff88; --bg: #080808; --panel: #111; --border: #222; }
         * { box-sizing: border-box; transition: 0.2s; }
-        body { background: var(--bg); color: #eee; font-family: 'Rajdhani', sans-serif; margin: 0; }
+        body { background: var(--bg); color: #eee; font-family: 'Rajdhani', sans-serif; margin: 0; min-height: 100vh; }
         
-        /* Sade Navbar */
-        .navbar { padding: 20px 10%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
+        .navbar { padding: 20px 10%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); background: #000; }
         .nav-links button { background: none; border: none; color: #666; font-family: 'Orbitron'; cursor: pointer; margin-left: 15px; font-size: 0.8rem; }
         .nav-links button:hover, .nav-links button.active { color: var(--accent); }
 
-        .container { max-width: 900px; margin: 0 auto; padding: 50px 20px; }
-        .panel { background: var(--panel); border: 1px solid var(--border); padding: 40px; border-radius: 8px; text-align: center; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .panel { background: var(--panel); border: 1px solid var(--border); padding: 40px; border-radius: 8px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
-        /* Sade Buton ve Input */
-        input { background: #000; border: 1px solid #333; padding: 12px; color: #fff; font-family: 'Orbitron'; width: 100%; max-width: 300px; text-align: center; border-radius: 4px; margin-bottom: 10px; }
-        .btn { background: #eee; color: #000; border: none; padding: 12px 25px; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; border-radius: 4px; }
+        input { background: #000; border: 1px solid #333; padding: 12px; color: #fff; font-family: 'Orbitron'; width: 100%; max-width: 350px; text-align: center; border-radius: 4px; margin-bottom: 12px; outline: none; }
+        input:focus { border-color: var(--accent); }
+        .btn { background: #eee; color: #000; border: none; padding: 12px 25px; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; border-radius: 4px; width: 100%; max-width: 350px; }
         .btn:hover { background: var(--accent); transform: translateY(-2px); }
 
-        .page { display: none; animation: fadeIn 0.3s ease; }
-        .page.active { display: block; }
+        .page { display: none; }
+        .page.active { display: block; animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Market Kartları */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
-        .card { background: #151515; border: 1px solid var(--border); padding: 25px; border-radius: 8px; text-align: center; }
-        .card h3 { font-family: 'Orbitron'; font-size: 0.9rem; margin: 0; color: var(--accent); }
-        .price { font-size: 1.5rem; display: block; margin: 15px 0; font-family: 'Orbitron'; }
+        .card { background: #151515; border: 1px solid var(--border); padding: 30px; border-radius: 8px; text-align: center; margin-top: 20px; }
+        .price { font-size: 2.5rem; display: block; margin: 20px 0; font-family: 'Orbitron'; color: var(--accent); }
 
-        /* Pop-up */
-        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; align-items: center; justify-content: center; flex-direction: column; text-align: center; }
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; align-items: center; justify-content: center; flex-direction: column; text-align: center; }
     </style>
 </head>
 <body>
 
-    <div id="successScreen" class="overlay">
-        <h1 style="font-family:'Orbitron'; color:var(--accent);">İŞLEM BAŞARILI!</h1>
-        <p id="successMsg" style="margin-bottom: 20px; color: #888;"></p>
-        <div id="downloadArea"></div>
-        <br>
-        <button class="btn" onclick="closePop()">KAPAT</button>
+    <div id="dlScreen" class="overlay">
+        <h1 style="font-family:'Orbitron'; color:var(--accent);">ÖDEME ONAYLANDI</h1>
+        <p style="margin-bottom: 25px; color: #888;">Ruse.pro Client dosyanız indirilmeye hazır.</p>
+        <a href="https://senin-siten.com/dosyalar/ruse_pro.jar" download class="btn" style="text-decoration:none; background:var(--accent); display:inline-block; line-height:1.2;">Ruse.pro İNDİR (.JAR)</a>
+        <br><br>
+        <button class="btn" onclick="document.getElementById('dlScreen').style.display='none'" style="background:transparent; color:#555; border:1px solid #333;">KAPAT</button>
     </div>
 
     <div class="navbar">
-        <div style="font-family:'Orbitron'; font-weight:700; letter-spacing:2px;">RUSE.PRO</div>
-        <div class="nav-links" id="menu" style="display:none">
-            <button onclick="show('market')" id="m-btn">MARKET</button>
-            <button onclick="show('yukle')" id="y-btn">BAKİYE</button>
-            <button onclick="show('ekip')" id="e-btn">EKİP</button>
+        <div style="font-family:'Orbitron'; font-weight:700; letter-spacing:2px; color: var(--accent);">RUSE.PRO</div>
+        <div class="nav-links" id="mainMenu" style="display:none">
+            <button onclick="show('shop')" id="b-shop">MAĞAZA</button>
+            <button onclick="show('wallet')" id="b-wallet">CÜZDAN</button>
+            <button onclick="show('team')" id="b-team">EKİP</button>
         </div>
     </div>
 
     <div class="container">
-        <div id="p-auth" class="panel">
-            <h2 style="font-family:'Orbitron'">HİLENİN TEK ADRESİ</h2>
-            <input type="text" id="u" placeholder="KULLANICI ADI"><br>
-            <input type="password" id="p" placeholder="ŞİFRE"><br>
-            <button class="btn" onclick="login()">GİRİŞ YAP / KAYIT OL</button>
+        <div id="authBox" class="panel">
+            <h2 style="font-family:'Orbitron'; margin-bottom:25px;">HESAP OLUŞTUR / GİRİŞ</h2>
+            <input type="email" id="regEmail" placeholder="E-POSTA ADRESİ"><br>
+            <input type="text" id="regUser" placeholder="KULLANICI ADI"><br>
+            <input type="password" id="regPass" placeholder="ŞİFRE"><br>
+            <button class="btn" onclick="handleAuth()">SİSTEME GİR</button>
+            <p style="font-size: 0.7rem; color: #444; margin-top: 15px;">Mail adresi ve kullanıcı adı eşleşmelidir.</p>
         </div>
 
-        <div id="p-market" class="page">
-            <div class="panel" style="padding:15px; margin-bottom:15px;">
-                <p style="margin:0; font-family:'Orbitron'">BAKİYE: <span id="cash" style="color:var(--accent)">0</span> TL</p>
+        <div id="p-shop" class="page">
+            <div class="panel" style="padding:15px; margin-bottom:20px;">
+                <p style="margin:0; font-family:'Orbitron'">BAKİYE: <span id="userBal" style="color:var(--accent)">0</span> TL</p>
             </div>
-            <div class="grid">
-                <div class="card"><h3>REACH PRO</h3><span class="price">30 TL</span><button class="btn" onclick="buy(30, 'Reach_Pro.jar')">SATIN AL</button></div>
-                <div class="card"><h3>KASIRGA PRO</h3><span class="price">30 TL</span><button class="btn" onclick="buy(30, 'Kasirga_Pro.jar')">SATIN AL</button></div>
-                <div class="card"><h3>KILL AURA</h3><span class="price">30 TL</span><button class="btn" onclick="buy(30, 'KillAura_Pro.jar')">SATIN AL</button></div>
+            <div class="card">
+                <span style="font-family:'Orbitron'; color:#555; font-size:0.8rem; letter-spacing:2px;">ALL-IN-ONE PACKAGE</span>
+                <h2 style="font-family:'Orbitron'; margin:10px 0;">RUSE.PRO FULL ACCESS</h2>
+                <span class="price">100 TL</span>
+                <p style="color:#666; margin-bottom:25px;">Reach, KillAura, Kasırga ve tüm modlar tek pakette.</p>
+                <button class="btn" onclick="buyRuse()">SATIN AL VE İNDİR</button>
             </div>
         </div>
 
-        <div id="p-yukle" class="page">
+        <div id="p-wallet" class="page">
             <div class="panel">
                 <h2 style="font-family:'Orbitron'">BAKİYE YÜKLE</h2>
-                <input type="text" id="k" placeholder="KODUNU GİR"><br>
-                <button class="btn" onclick="useCode()">ONAYLA</button>
-                <p style="margin-top:20px; font-size:0.8rem;"><a href="https://www.itemsatis.com/minecraft/ruse-bakiye-100tl-5139335.html" target="_blank" style="color:var(--accent)">İtemSatış'tan Kod Al</a></p>
+                <input type="text" id="coupon" placeholder="KODUNU BURAYA YAZ"><br>
+                <button class="btn" onclick="redeem()">KODU ONAYLA</button>
+                <div style="margin-top:25px;">
+                    <a href="https://www.itemsatis.com/minecraft/ruse-bakiye-100tl-5139335.html" target="_blank" style="color:var(--accent); text-decoration:none; font-size:0.9rem;">İtemSatış Mağazasına Git →</a>
+                </div>
             </div>
         </div>
 
-        <div id="p-ekip" class="page">
-            <div class="grid">
-                <div class="card"><span>KURUCU</span><b>Trickster</b></div>
-                <div class="card"><span>ORTAK</span><b>DarkMertatom</b></div>
+        <div id="p-team" class="page">
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+                <div class="panel" style="padding:25px;"><span>KURUCU</span><h3 style="font-family:'Orbitron'">Trickster</h3></div>
+                <div class="panel" style="padding:25px;"><span>ORTAK</span><h3 style="font-family:'Orbitron'">DarkMertatom</h3></div>
             </div>
         </div>
     </div>
 
     <script>
-        // Dosya Linkleri (Buraya gerçek .jar linklerini koyabilirsin kanka)
-        const DOWNLOADS = {
-            "Reach_Pro.jar": "https://senin-siten.com/dosyalar/reach.jar",
-            "Kasirga_Pro.jar": "https://senin-siten.com/dosyalar/kasirga.jar",
-            "KillAura_Pro.jar": "https://senin-siten.com/dosyalar/killaura.jar"
-        };
+        function handleAuth() {
+            const m = document.getElementById('regEmail').value.trim();
+            const u = document.getElementById('regUser').value.trim();
+            const p = document.getElementById('regPass').value.trim();
 
-        function login() {
-            const user = document.getElementById('u').value;
-            const pass = document.getElementById('p').value;
-            if(!user || !pass) return;
-            localStorage.setItem('user', user);
-            localStorage.setItem('logged', 'true');
-            if(!localStorage.getItem('bal')) localStorage.setItem('bal', '0');
+            if(!m || !u || !p) return alert("Tüm alanları doldur!");
+            if(!m.includes("@")) return alert("Geçerli bir mail gir!");
+
+            // Aynı kullanıcı adı veya mail ile başka hesap açılmasını engelleme mantığı
+            const savedMail = localStorage.getItem('r_mail');
+            const savedUser = localStorage.getItem('r_user');
+
+            if(savedUser && savedUser === u && savedMail !== m) {
+                return alert("Bu kullanıcı adı zaten başka bir mail ile kayıtlı!");
+            }
+
+            if(!savedUser) { // Yeni Kayıt
+                localStorage.setItem('r_mail', m);
+                localStorage.setItem('r_user', u);
+                localStorage.setItem('r_pass', p);
+                localStorage.setItem('r_bal', '0');
+                alert("Hesap oluşturuldu!");
+            } else { // Giriş Kontrolü
+                if(savedMail !== m || savedPass !== p) return alert("Hatalı bilgiler!");
+            }
+
+            localStorage.setItem('isLogged', 'true');
             location.reload();
         }
 
         window.onload = () => {
-            if(localStorage.getItem('logged')) {
-                document.getElementById('p-auth').style.display = 'none';
-                document.getElementById('menu').style.display = 'flex';
-                document.getElementById('cash').innerText = localStorage.getItem('bal');
-                show('market');
+            if(localStorage.getItem('isLogged')) {
+                document.getElementById('authBox').style.display = 'none';
+                document.getElementById('mainMenu').style.display = 'flex';
+                document.getElementById('userBal').innerText = localStorage.getItem('r_bal');
+                show('shop');
             }
         };
 
         function show(id) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('p-' + id).classList.add('active');
+            document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+            document.getElementById('b-' + id).classList.add('active');
         }
 
-        function buy(price, fileName) {
-            let bal = parseInt(localStorage.getItem('bal'));
-            if(bal >= price) {
-                bal -= price;
-                localStorage.setItem('bal', bal);
-                document.getElementById('cash').innerText = bal;
-                
-                // Başarı Mesajı ve İndirme Butonu
-                document.getElementById('successMsg').innerText = "Ödeme Başarılı! Dosyan Hazır.";
-                document.getElementById('downloadArea').innerHTML = `<a href="${DOWNLOADS[fileName]}" download class="btn" style="background:var(--accent); text-decoration:none; color:#000;">${fileName} İNDİR</a>`;
-                document.getElementById('successScreen').style.display = 'flex';
+        function buyRuse() {
+            let bal = parseInt(localStorage.getItem('r_bal')) || 0;
+            if(bal >= 100) {
+                bal -= 100;
+                localStorage.setItem('r_bal', bal);
+                document.getElementById('dlScreen').style.display = 'flex';
+                document.getElementById('userBal').innerText = bal;
             } else {
-                alert("Bakiyen yetersiz kanka!");
+                alert("Bakiye yetersiz! İtemSatış'tan kod alabilirsin.");
             }
         }
 
-        function useCode() {
-            const code = document.getElementById('k').value.toUpperCase();
+        function redeem() {
+            const code = document.getElementById('coupon').value.toUpperCase();
             let codes = JSON.parse(localStorage.getItem('ruse_dynamic_codes')) || {};
             if(codes[code]) {
-                let bal = parseInt(localStorage.getItem('bal')) + codes[code];
-                localStorage.setItem('bal', bal);
+                let bal = (parseInt(localStorage.getItem('r_bal')) || 0) + codes[code];
+                localStorage.setItem('r_bal', bal);
                 delete codes[code];
                 localStorage.setItem('ruse_dynamic_codes', JSON.stringify(codes));
-                alert("Bakiye eklendi!");
+                alert("Bakiye başarıyla yüklendi!");
                 location.reload();
-            } else { alert("Geçersiz kod!"); }
+            } else { alert("Geçersiz veya kullanılmış kod!"); }
         }
-
-        function closePop() { document.getElementById('successScreen').style.display = 'none'; }
     </script>
 </body>
 </html>
